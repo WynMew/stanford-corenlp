@@ -113,6 +113,7 @@ class StanfordCoreNLP:
         host_name = urlparse(self.url).hostname
         time.sleep(1)  # OSX, not tested
         trial = 1
+        #print(host_name, self.port)
         while sock.connect_ex((host_name, self.port)):
             if trial > max_retries:
                 raise ValueError('Corenlp server is not available')
@@ -174,7 +175,9 @@ class StanfordCoreNLP:
         return r_dict
 
     def word_tokenize(self, sentence, span=False):
-        r_dict = self._request('ssplit,tokenize', sentence)
+        #print(sentence)
+        #r_dict = self._request('ssplit,tokenize', sentence)
+        r_dict = self._request(self.url,'ssplit,tokenize', data=sentence)
         tokens = [token['originalText'] for s in r_dict['sentences'] for token in s['tokens']]
 
         # Whether return token span
@@ -215,7 +218,8 @@ class StanfordCoreNLP:
                 s['basicDependencies']]
 
     def coref(self, text):
-        r_dict = self._request('coref', text)
+        #r_dict = self._request('coref', text)
+        r_dict = self._request(self.url,'coref', text)
 
         corefs = []
         for k, mentions in r_dict['corefs'].items():
@@ -231,7 +235,9 @@ class StanfordCoreNLP:
 
     def _request(self, url, annotators=None, data=None, *args, **kwargs):
         if sys.version_info.major >= 3:
+            #print(data)
             data = data.encode('utf-8')
+            #print(data)
 
         properties = {'annotators': annotators, 'outputFormat': 'json'}
         params = {'properties': str(properties), 'pipelineLanguage': self.lang}
