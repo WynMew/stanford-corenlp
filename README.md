@@ -1,4 +1,4 @@
-## stanfordcorenlp
+## stanfordcorenlp python wrapper. Bug fixed vision
 [![PyPI](https://img.shields.io/pypi/v/stanfordcorenlp.svg)]()
 [![GitHub release](https://img.shields.io/github/release/Lynten/stanford-corenlp.svg)]()
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/stanfordcorenlp.svg)]()
